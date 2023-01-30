@@ -22,8 +22,7 @@ export class SearchBar extends Component {
       toast.warn('Enter words to search for!');
       return;
     };
-    onSubmit({search});
-    this.reset();
+    onSubmit(search);
   };
 
   reset() {

@@ -26,7 +26,7 @@ export class App extends Component  {
  
  componentDidUpdate(prevProps, prevState) {
   const {search, page} = this.state;
-  if(prevState.search !== search || prevState.page !== page) {
+   if(prevState.search !== search || prevState.page !== page) {
     this.setState({ status: 'pending' });
     this.lookForImages();
   };
@@ -54,8 +54,11 @@ export class App extends Component  {
    };
  };
 
- searchImages = ({search}) => {
-  this.setState({search, images: [], page: 1});
+ searchImages = (search) => {
+  if(search === this.state.search) {
+    toast.warn('This is the same query!');
+    return;
+  } this.setState({search, images: [], page: 1});
  };
 
  loadMore = () => {
@@ -86,7 +89,7 @@ export class App extends Component  {
       <ImageGallery images={images} showImage={showImage}/>
       {loading && <Loader />}
       {showModal  && <Modal close={closeModal} image={largeImageURL}/>}
-      {totalHits > 12 &&  status !== 'pending' && (<Button onClick={loadMore}/>)}
+      {totalHits > 12 &&  status !== 'pending' && images.length !== 0 && (<Button onClick={loadMore}/>)}
        <ToastContainer autoClose={2000}/>
     </div>);
   };
